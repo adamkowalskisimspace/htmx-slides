@@ -1,14 +1,21 @@
 {% extends 'slide.html' %} {% block content %}
-<h1 class="text-4xl">Active Search</h1>
+<h1 class="text-4xl">Table</h1>
 
-<div hx-get="/active_search/table" />
+<div hx-get="/table" hx-trigger="load">
+    {% include "icons/indicator.html" %}
+</div>
 
 <form>
     <input
         type="search"
         name="search"
         placeholder="Search"
+        autofocus
         class="border p-2 bg-gray-900 text-white"
+        hx-get="/table"
+        hx-trigger="keyup delay:100ms changed"
+        hx-target="#table"
+        hx-swap="outerHTML"
     />
 </form>
 {% endblock %}

@@ -1,4 +1,7 @@
-<table class="border-separate border-spacing-2 border border-slate-500">
+<table
+    id="table"
+    class="border-separate border-spacing-2 border border-slate-500"
+>
     <thead>
         <tr>
             <th>First</th>
@@ -7,20 +10,12 @@
         </tr>
     </thead>
     <tbody>
+        {% for person in people %}
         <tr>
-            <td>Bob</td>
-            <td>Smith</td>
-            <td>32</td>
+            <td>{{person.first}}</td>
+            <td>{{person.last}}</td>
+            <td>{{person.age}}</td>
         </tr>
-        <tr>
-            <td>Joe</td>
-            <td>Johnson</td>
-            <td>28</td>
-        </tr>
-        <tr>
-            <td>Sally</td>
-            <td>Carter</td>
-            <td>35</td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
