@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>slides</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/htmx.org@2.0.1"></script>
+    </head>
+
+    <body class="flex flex-col bg-gray-800 text-white h-full p-2">
+        <main class="flex flex-col justify-center items-center gap-10 flex-1">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="flex justify-between">
+            {% if previous is not none %}
+            <a href="/slides/{{previous}}" class="w-8"
+                >{% include "icons/left.html" %}</a
+            >
+            {% else %}
+            <span class="w-8"></span>
+            {% endif %}
+
+            <strong>{{current}}</strong>
+
+            {% if next is not none %}
+            <a href="/slides/{{next}}" class="w-8"
+                >{% include "icons/right.html" %}</a
+            >
+            {% else %}
+            <span class="w-8"></span>
+            {% endif %}
+        </footer>
+    </body>
+</html>

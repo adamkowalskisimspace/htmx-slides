@@ -1,0 +1,14 @@
+{% extends 'slide.html' %} {% block content %}
+<h1 class="text-4xl">Active Search</h1>
+
+<div hx-get="/active_search/table" />
+
+<form>
+    <input
+        type="search"
+        name="search"
+        placeholder="Search"
+        class="border p-2 bg-gray-900 text-white"
+    />
+</form>
+{% endblock %}
