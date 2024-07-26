@@ -1,0 +1,5 @@
+{% extends 'slide.html' %} {% block content %}
+<h1 class="text-4xl">Progress Meter</h1>
+
+<div hx-ext="sse" sse-connect="/progress-meter" sse-swap="message" />
+{% endblock %}
