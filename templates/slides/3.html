@@ -1,0 +1,17 @@
+{% extends 'slide.html' %} {% block content %}
+<h1 class="text-4xl">Chat</h1>
+
+<div hx-ext="ws" ws-connect="/chat">
+    <form ws-send class="flex gap-2">
+        <input
+            name="message"
+            placeholder="message"
+            class="border p-2 bg-gray-900 text-white"
+        />
+        <button type="submit" class="border p-2">
+            {% include "icons/send.html" %}
+        </button>
+    </form>
+    <div id="chat" class="flex flex-col gap"></div>
+</div>
+{% endblock %}

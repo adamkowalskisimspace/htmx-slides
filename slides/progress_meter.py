@@ -1,28 +1,20 @@
 import asyncio
 from typing import AsyncGenerator
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse, StreamingResponse
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import StreamingResponse
+from jinja2 import Environment, FileSystemLoader
 
 router = APIRouter()
 
-templates = Jinja2Templates(directory="templates")
-
-
-def encode_html(template_response: HTMLResponse) -> str:
-    html = template_response.body.decode()
-    return html.replace(chr(10), "").replace(chr(13), "")
+env = Environment(loader=FileSystemLoader("templates"))
 
 
 async def progress_meter(request: Request) -> AsyncGenerator[str, None]:
     for progress in range(11):
-        template_response = templates.TemplateResponse(
-            request=request,
-            name=f"/progress_meter.html",
-            context={"progress": progress * 10},
-        )
-        html = encode_html(template_response)
-        yield f"data: {html}\n\n"
+        template = env.get_template("progress_meter.html")
+        html = template.render(progress=progress * 10)
+        encoded_html = html.replace(chr(10), "").replace(chr(13), "")
+        yield f"data: {encoded_html}\n\n"
         await asyncio.sleep(1)
 
 
