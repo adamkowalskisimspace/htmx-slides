@@ -10,6 +10,19 @@ env = Environment(loader=FileSystemLoader("templates"))
 connections: list[WebSocket] = []
 
 
+async def broadcast(message: str):
+    template = env.get_template("chat/message.html")
+    html = template.render(message=message)
+    for websocket in connections:
+        await websocket.send_text(html)
+
+
+async def clear_input(websocket: WebSocket):
+    template = env.get_template("chat/input.html")
+    html = template.render()
+    await websocket.send_text(html)
+
+
 @router.websocket("/chat")
 async def websocket_chat(websocket: WebSocket):
     await websocket.accept()
@@ -18,10 +31,7 @@ async def websocket_chat(websocket: WebSocket):
         while True:
             data = await websocket.receive_text()
             json_data = json.loads(data)
-            message = json_data["message"]
-            template = env.get_template("chat.html")
-            html = template.render(message=message)
-            for connection in connections:
-                await connection.send_text(html)
+            await broadcast(json_data["message"])
+            await clear_input(websocket)
     except WebSocketDisconnect:
         connections.remove(websocket)
