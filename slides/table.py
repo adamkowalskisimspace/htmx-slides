@@ -1,3 +1,4 @@
+import random
 import asyncio
 from typing import TypedDict
 from fastapi import APIRouter, Request
@@ -40,7 +41,8 @@ async def read_table(request: Request):
     search = data.get("search")
     if search is None:
         print("sleeping")
-        await asyncio.sleep(1)
+        sleep_time = random.randint(1, 2)
+        await asyncio.sleep(sleep_time)
         search = ""
     people = filtered_people(search.lower())
     return templates.TemplateResponse(

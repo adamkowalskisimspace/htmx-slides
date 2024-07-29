@@ -3,6 +3,11 @@
 
 <div hx-ext="ws" ws-connect="/chat">
     <form ws-send class="flex gap-2">
+        <input
+            name="name"
+            placeholder="name"
+            class="border p-2 bg-gray-900 text-white w-24"
+        />
         {% include "chat/input.html" %}
         <button type="submit" class="border p-2">
             {% include "icons/send.html" %}
